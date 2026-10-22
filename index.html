@@ -2234,19 +2234,22 @@ function init(){
 
 
   /*
-    Default month
-  */
+  Default to the latest month with data
+*/
 
-  if(
-    months.includes(
-      'September 2026'
-    )
-  ){
+const monthsWithData = [
+  ...new Set(
+    records
+      .filter(r => r.month)
+      .map(r => cleanMonth(r.month))
+      .filter(Boolean)
+  )
+].sort((a, b) => new Date(a) - new Date(b));
 
-    $('month').value =
-      'September 2026';
-
-  }
+if (monthsWithData.length > 0) {
+  $('month').value =
+    monthsWithData[monthsWithData.length - 1];
+}
 
 
   /*
